@@ -4,12 +4,16 @@ using UnityEngine;
 
 public class Unit : MonoBehaviour
 {
+    public enum type{
+        king, queen, rook, bishop, knight, pawn
+    }
+
     [SerializeField] protected bool selected;
     protected private GameMaster gm;
 
     [SerializeField] protected bool hasMoved;
 
-    [SerializeField] protected int side;
+    [SerializeField] public int side;
 
     [SerializeField] protected GameObject selectionMark;
 

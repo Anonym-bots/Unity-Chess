@@ -152,6 +152,16 @@ public class GameMaster : MonoBehaviour
         
     }
 
+    public GameObject CreatePiece(int side, Piece pos)
+    {
+        GameObject obj = Instantiate(pawnPrefab, new Vector2(0,0), Quaternion.identity, pieceParent);
+        Unit unit = obj.GetComponent<Unit>();
+        unit.side = side;
+        unit.transform.position = SetCoords(pos);
+
+        return obj;
+    }
+
     public Vector2 SetCoords(Piece _piece)
     {
         int x = 1;
