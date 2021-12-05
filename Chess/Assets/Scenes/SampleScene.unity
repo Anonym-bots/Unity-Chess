@@ -1370,11 +1370,16 @@ MonoBehaviour:
   boardOffset: {x: -4.5, y: -4.5}
   pawnPrefab: {fileID: 4835343441942325970, guid: 61112c0d0f9cb4e4f9979eb41610d8b0,
     type: 3}
-  kingPrefab: {fileID: 0}
-  queenPrefab: {fileID: 0}
-  rookPrefab: {fileID: 0}
-  knightPrefab: {fileID: 0}
-  bishopPrefab: {fileID: 0}
+  kingPrefab: {fileID: 4835343441942325970, guid: 5e5d6724c33eef44588ff0d3605d43d5,
+    type: 3}
+  queenPrefab: {fileID: 4835343441942325970, guid: b1db929330de7e24389b8c77a7017ea7,
+    type: 3}
+  rookPrefab: {fileID: 4835343441942325970, guid: 3f3b154cf71fd9e4babdf8a5b29738d8,
+    type: 3}
+  knightPrefab: {fileID: 4835343441942325970, guid: 5063f1daf187c664c87f3885dde8fa46,
+    type: 3}
+  bishopPrefab: {fileID: 4835343441942325970, guid: e6e3b28bc8c3cb94a83684d39d428710,
+    type: 3}
   playerWhite:
     pawns:
     - file: 0

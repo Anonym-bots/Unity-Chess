@@ -11,6 +11,8 @@ public class GameMaster : MonoBehaviour
 
     public Vector2 boardOffset  = new Vector2(-4.5f,-4.5f);
 
+    public Transform pieceParent;
+
     public enum files
     {
         a,b,c,d,e,f,g,h
@@ -87,11 +89,66 @@ public class GameMaster : MonoBehaviour
     public void SetupPieces ()
     {
         Vector2 position = new Vector2(0,0);
+
+        //White's pieces
         foreach(Piece piece in playerWhite.pawns)
         {
             position = SetCoords(piece);
-            pieces.Add(Instantiate(pawnPrefab, position, Quaternion.identity));
+            pieces.Add(Instantiate(pawnPrefab, position, Quaternion.identity, pieceParent));
         }
+        foreach(Piece piece in playerWhite.knights)
+        {
+            position = SetCoords(piece);
+            pieces.Add(Instantiate(knightPrefab, position, Quaternion.identity, pieceParent));
+        }
+        foreach(Piece piece in playerWhite.bishops)
+        {
+            position = SetCoords(piece);
+            pieces.Add(Instantiate(bishopPrefab, position, Quaternion.identity, pieceParent));
+        }
+        foreach(Piece piece in playerWhite.rooks)
+        {
+            position = SetCoords(piece);
+            pieces.Add(Instantiate(rookPrefab, position, Quaternion.identity, pieceParent));
+        }
+        foreach(Piece piece in playerWhite.queens)
+        {
+            position = SetCoords(piece);
+            pieces.Add(Instantiate(queenPrefab, position, Quaternion.identity, pieceParent));
+        }
+        
+        position = SetCoords(playerWhite.king);
+        pieces.Add(Instantiate(kingPrefab, position, Quaternion.identity, pieceParent));
+
+        //Black's pieces
+        foreach(Piece piece in playerBlack.pawns)
+        {
+            position = SetCoords(piece);
+            pieces.Add(Instantiate(pawnPrefab, position, Quaternion.identity, pieceParent));
+        }
+        foreach(Piece piece in playerBlack.knights)
+        {
+            position = SetCoords(piece);
+            pieces.Add(Instantiate(knightPrefab, position, Quaternion.identity, pieceParent));
+        }
+        foreach(Piece piece in playerBlack.bishops)
+        {
+            position = SetCoords(piece);
+            pieces.Add(Instantiate(bishopPrefab, position, Quaternion.identity, pieceParent));
+        }
+        foreach(Piece piece in playerBlack.rooks)
+        {
+            position = SetCoords(piece);
+            pieces.Add(Instantiate(rookPrefab, position, Quaternion.identity, pieceParent));
+        }
+        foreach(Piece piece in playerBlack.queens)
+        {
+            position = SetCoords(piece);
+            pieces.Add(Instantiate(queenPrefab, position, Quaternion.identity, pieceParent));
+        }
+        
+        position = SetCoords(playerBlack.king);
+        pieces.Add(Instantiate(kingPrefab, position, Quaternion.identity, pieceParent));
         
     }
 
