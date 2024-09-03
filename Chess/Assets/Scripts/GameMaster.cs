@@ -2,6 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum File
+{
+    a, b, c, d, e, f, g, h
+}
+
+[System.Serializable]
+public class PiecePosition
+{
+    [Range(1, 8)] public int row;
+    public File file;
+}
+
 public class GameMaster : MonoBehaviour
 {
     public Unit selectedUnit;
@@ -13,15 +25,11 @@ public class GameMaster : MonoBehaviour
 
     public Transform pieceParent;
 
-    public enum files
-    {
-        a,b,c,d,e,f,g,h
-    }
 
-    [System.Serializable]
+
     public class Piece
     {
-        public files file;
+        public File file;
         public int row;
     }
 
@@ -178,28 +186,28 @@ public class GameMaster : MonoBehaviour
 
         switch (_piece.file)
         {
-            case files.a:
+            case File.a:
                 x = 1;
                 break;
-            case files.b:
+            case File.b:
                 x = 2;
                 break;
-            case files.c:
+            case File.c:
                 x = 3;
                 break;
-            case files.d:
+            case File.d:
                 x = 4;
                 break;
-            case files.e:
+            case File.e:
                 x = 5;
                 break;
-            case files.f:
+            case File.f:
                 x = 6;
                 break;
-            case files.g:
+            case File.g:
                 x = 7;
                 break;
-            case files.h:
+            case File.h:
                 x = 8;
                 break;
         }
