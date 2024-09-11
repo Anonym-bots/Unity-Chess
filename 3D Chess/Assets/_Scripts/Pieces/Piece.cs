@@ -7,9 +7,9 @@ public abstract class Piece : MonoBehaviour
 {
     public Side Owner { get; protected set; }
 
-    protected PiecePosition currentPos;
+    protected BoardPosition currentPos;
 
-    public abstract BoardPosition[] GetPossibleMoves();
+    public abstract Dictionary<(BoardPosition, BoardPosition), Move> GetPossibleMoves(Board board);
 
 
     public override string ToString() => $"{Owner} {GetType().Name}";

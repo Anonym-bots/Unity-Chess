@@ -1,12 +1,9 @@
 using System;
-using System.Collections;
 using System.Linq;
 using UnityEngine;
 
 public class BoardSetupManager : MonoBehaviour
 {
-
-
     [Header("Current Board")]
     public BoardSetup currentBoard;
 
@@ -14,7 +11,7 @@ public class BoardSetupManager : MonoBehaviour
     public Transform pieceParent;
     public Piece wPawn, wKnight, wBishop, wRook, wQueen, wKing, bPawn, bKnight, bBishop, bRook, bQueen, bKing;
 
-    public PieceType[,] board;  // This doens't seem right
+    public Piece[,] board = new Piece[8,8];  // This doens't seem right
 
 
     public bool TileOccupied(BoardPosition tile)
@@ -33,51 +30,50 @@ public class BoardSetupManager : MonoBehaviour
     /// <param name="setup">The boardstate to spawn</param>
     public void SpawnPieces(BoardSetup setup)
     {
-        PiecePosition piece;
-        Piece prefab;
-        Vector3 pos;
-
         // spawn kings
-        prefab = wKing;
-        pos = GetWorldPosition(setup.whiteKingPosition);
+        SpawnPiece(wKing, setup.whiteKingPosition);
+        SpawnPiece(bKing, setup.blackKingPosition);
 
-        Instantiate(prefab, pos, Quaternion.identity, pieceParent);
-
-        prefab = bKing;
-        pos = GetWorldPosition(setup.blackKingPosition);
-
-        Instantiate(prefab, pos, Quaternion.identity, pieceParent);
-
-
-
+        PiecePosition piece;
         for (int i = 0; i < setup.pieces.Count; i++)
         {
             piece = setup.pieces[i];
-            if (piece.piece == PieceType.King) continue;    // no double kings!
-            prefab = GetPrefab(piece);
-            pos = GetWorldPosition(piece);
+            if (piece.pieceType == PieceType.King) continue;    // no double kings!
 
-            Piece go = Instantiate(prefab, pos, Quaternion.identity, pieceParent);
-
-            board[piece.position.Rank, piece.position.file] = piece.piece;
+            SpawnPiece(piece);
         }
+    }
+
+    private void SpawnPiece(PiecePosition piece) => SpawnPiece(GetPrefab(piece), piece.position);
+    private void SpawnPiece(Piece prefab, BoardPosition boardPos)
+    {
+        Vector3 pos = GetWorldPosition(boardPos);
+        Piece go = Instantiate(prefab, pos, Quaternion.identity, pieceParent);
+        board[boardPos.Rank - 1, boardPos.File - 1] = go;
+
+        Debug.Log($"{boardPos} - {GetPieceFromTile(boardPos)}");
     }
     #endregion
 
     #region Helpers
-    public static Vector3 GetWorldPosition(PiecePosition pos) => GetWorldPosition(pos.position);
 
+    public Piece GetPieceFromTile(BoardPosition pos) => GetPieceFromTile(pos.Rank, pos.File);
+    public Piece GetPieceFromTile(int rank, int file)
+    {
+        return board[rank-1, file-1];
+    }
+
+    public static Vector3 GetWorldPosition(PiecePosition pos) => GetWorldPosition(pos.position);
     public static Vector3 GetWorldPosition(BoardPosition pos)
     {
         pos.Rank = Math.Clamp(pos.Rank, 1, 8);
-        int x = (pos.file - 1) * 2;
+        int x = (pos.File - 1) * 2;
         int z = (pos.Rank - 1) * 2;
 
         return new Vector3(x, 0, z);
     }
 
-    public Piece GetPrefab(PiecePosition piece) => GetPrefab(piece.piece, piece.color);
-
+    public Piece GetPrefab(PiecePosition piece) => GetPrefab(piece.pieceType, piece.color);
     public Piece GetPrefab(PieceType piece, Side col) => piece switch
     {
         PieceType.Pawn => col == Side.White ? wPawn : bPawn,

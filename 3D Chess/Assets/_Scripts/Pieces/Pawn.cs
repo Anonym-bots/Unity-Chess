@@ -7,29 +7,29 @@ public class Pawn : Piece
 
 
 
-    public override BoardPosition[] GetPossibleMoves()
+    public override Dictionary<(BoardPosition, BoardPosition), Move> GetPossibleMoves(Board board)
     {
         List<BoardPosition> possibleMoves = new List<BoardPosition>();
 
 
-        if (currentPos.color == Side.White)
+        if (Owner == Side.White)
         {
             // !! check front space occupied
             if (true)
             {
-                possibleMoves.Add(new BoardPosition(currentPos.position.Rank + 1, currentPos.position.file));
+                possibleMoves.Add(new BoardPosition(currentPos.Rank + 1, currentPos.File));
 
                 // 
-                if (currentPos.position.Rank == 2)
+                if (currentPos.Rank == 2)
                 {
-                    possibleMoves.Add(new BoardPosition(currentPos.position.Rank + 2, currentPos.position.file));
+                    possibleMoves.Add(new BoardPosition(currentPos.Rank + 2, currentPos.File));
                 }
             }
 
-            // check diag space black piece
+            // check diag space black pieceType
             if(false)
             {
-                possibleMoves.Add(new BoardPosition(currentPos.position.Rank + 2, currentPos.position.file - 1));
+                possibleMoves.Add(new BoardPosition(currentPos.Rank + 2, currentPos.File - 1));
             }
         }
 
@@ -39,6 +39,6 @@ public class Pawn : Piece
         // not white
 
 
-        return possibleMoves.ToArray();
+        return null;
     }
 }

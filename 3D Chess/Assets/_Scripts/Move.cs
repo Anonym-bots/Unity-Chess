@@ -15,6 +15,13 @@ public class Move
         this.end = end;
     }
 
+    public Move(Move move)
+    {
+        this.start = move.start;
+        this.end = move.end;
+        this.pieceType = move.pieceType;
+    }
+
 
     #region Overrides
 

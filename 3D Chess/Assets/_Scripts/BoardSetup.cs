@@ -22,21 +22,21 @@ public class BoardSetup : IDisposable
     }
 
     /// <summary>
-    /// Add a piece to a board setup.
+    /// Add a pieceType to a board setup.
     /// </summary>
-    /// <param name="piece">The piece and its position</param>
-    /// <param name="ownerColor">The color of the piece</param>
+    /// <param name="piece">The pieceType and its position</param>
+    /// <param name="ownerColor">The color of the pieceType</param>
     /// <returns>Whether the call was successfull</returns>
     public bool AddPiece(PiecePosition piece)
     {
         // each side can only have one king
-        if (piece.piece == PieceType.King)
+        if (piece.pieceType == PieceType.King)
         {
             Side col;
             for (int i = 0; i < Enum.GetNames(typeof(PieceType)).Length; i++)
             {
                 col = (Side)i;
-                if(piece.color == col && pieces.Any(x => x.piece == PieceType.King && x.color == col))
+                if(piece.color == col && pieces.Any(x => x.pieceType == PieceType.King && x.color == col))
                 {
                     // error: each side can only have one king
                     return false;
@@ -82,9 +82,10 @@ public enum Side
 public class BoardPosition
 {
     [SerializeField][Range(1, 8)] private int rank = 1;
-    [Range(1, 8)] public int file = 1;
+    [SerializeField][Range(1, 8)] private int file = 1;
 
     public int Rank { get => rank; set => rank = value; }
+    public int File { get => file; set => file = value; }
 
 
     public BoardPosition(int rank, File file)
@@ -100,12 +101,12 @@ public class BoardPosition
     }
 
 
-    public File GetFile() => (File)file;
-    public int GetTileNr() => (rank - 1) * 8 + (int) file;
-    public bool IsValid() => rank > 0 && rank < 9;
+    public File GetFile() => (File)(file-1);
+    public int GetTileNr() => (rank - 1) * 8 + file;
+    public bool IsValid() => rank > 0 && rank < 9 && file > 0 && file < 9;
 
     #region Operator Overrides
-    public override string ToString() => $"{GetFile().ToString()}{GetType().Name}";
+    public override string ToString() => $"{GetFile().ToString()}{Rank}";
     public static BoardPosition operator +(BoardPosition lhs, BoardPosition rhs) => new BoardPosition(lhs.rank + rhs.Rank, (File)((int)lhs.file + (int)rhs.file));
     public static bool operator ==(BoardPosition a, BoardPosition b) => a.rank == b.rank && a.file == b.file;
     public static bool operator !=(BoardPosition a, BoardPosition b) => a.rank != b.rank || a.file != b.file;
@@ -128,14 +129,15 @@ public class BoardPosition
 public class PiecePosition
 {
     public BoardPosition position;
-    public PieceType piece;
+    public PieceType pieceType;
     public Side color;
+    public Piece piece;
 
 
     public PiecePosition(BoardPosition pos, PieceType pieceType, Side col)
     {
         position = pos;
-        piece = pieceType;
+        this.pieceType = pieceType;
         color = col;
     }
 

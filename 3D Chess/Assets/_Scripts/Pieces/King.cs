@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class King : Piece
 {
-    public override BoardPosition[] GetPossibleMoves()
+    public override Dictionary<(BoardPosition, BoardPosition), Move> GetPossibleMoves(Board board)
     {
         throw new System.NotImplementedException();
     }
